@@ -1,0 +1,335 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart AI Features | Portfolio</title>
+  <!-- Use Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <style>
+    /* Dark Theme & Reset */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #1a1a1a;
+      color: #f0f0f0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    /* Navigation & Header */
+    .back-link {
+      color: #888;
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    .back-link:hover {
+      color: white;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .header h1 {
+      color: #4CAF50;
+      font-size: 2.5rem;
+      margin-bottom: 5px;
+    }
+
+    .header p {
+      color: #aaa;
+    }
+
+    /* Tabs Styling */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      border-bottom: 1px solid #333;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      color: #888;
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-bottom: 3px solid transparent;
+    }
+
+    .tab-btn:hover {
+      color: white;
+    }
+
+    .tab-btn.active {
+      color: #4CAF50;
+      border-bottom-color: #4CAF50;
+      font-weight: bold;
+    }
+
+    /* Content Sections */
+    .feature-section {
+      display: none;
+      /* Hidden by default */
+      background: #2a2a2a;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      border: 1px solid #333;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .feature-section.active {
+      display: block;
+      /* Show if active */
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .feature-title {
+      color: #4CAF50;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Forms */
+    .form-control {
+      width: 100%;
+      padding: 12px;
+      background: #333;
+      border: 1px solid #444;
+      color: white;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 12px;
+      background: #333;
+      border: 1px solid #444;
+      color: white;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #ccc;
+    }
+
+    .btn-submit {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-submit:hover {
+      background: #45a049;
+    }
+
+    /* Results Logic */
+    .result-box {
+      margin-top: 25px;
+      padding: 20px;
+      background: #1f1f1f;
+      border-left: 4px solid #4CAF50;
+      border-radius: 4px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 0.85rem;
+      margin: 2px;
+    }
+
+    .badge-success {
+      background: #1b5e20;
+      color: #a5d6a7;
+      border: 1px solid #2e7d32;
+    }
+
+    .badge-missing {
+      background: #602020;
+      color: #ef9a9a;
+      border: 1px solid #c62828;
+    }
+
+    .score-display {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #4CAF50;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+
+    <div class="header">
+      <h1><i class="fas fa-brain"></i> Smart Features</h1>
+      <p>Experimental AI & Logic Modules</p>
+    </div>
+
+    <!-- TABS Navigation -->
+    <div class="tabs">
+      <button class="tab-btn {% if active_tab == 'resume' %}active{% endif %}" onclick="openTab('resume')">
+        <i class="fas fa-file-alt"></i> Resume Analyzer
+      </button>
+      <button class="tab-btn {% if active_tab == 'chat' %}active{% endif %}" onclick="openTab('chat')">
+        <i class="fas fa-comments"></i> Chatbot
+      </button>
+      <button class="tab-btn {% if active_tab == 'recommender' %}active{% endif %}" onclick="openTab('recommender')">
+        <i class="fas fa-lightbulb"></i> Project Recommender
+      </button>
+    </div>
+
+    <!-- 1. RESUME ANALYZER -->
+    <div id="resume" class="feature-section {% if active_tab == 'resume' %}active{% endif %}">
+      <h2 class="feature-title"><i class="fas fa-search"></i> Keyword Matcher</h2>
+      <p style="margin-bottom: 20px; color: #aaa;">Paste your resume text to see how well it matches a "Full Stack
+        Python Dev" profile.</p>
+
+      <form method="POST">
+        {% csrf_token %}
+        {{ resume_form.as_p }}
+        <button type="submit" name="resume_submit" class="btn-submit">Analyze Resume</button>
+      </form>
+
+      {% if resume_result %}
+      <div class="result-box">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h3>Match Score: <span class="score-display">{{ resume_result.score }}%</span></h3>
+        </div>
+        <p><em>{{ resume_result.suggestion }}</em></p>
+
+        <p><strong>Found Skills:</strong><br>
+          {% for skill in resume_result.found %}
+          <span class="badge badge-success"><i class="fas fa-check"></i> {{ skill|title }}</span>
+          {% empty %}
+          <span style="color: #666;">No skills found.</span>
+          {% endfor %}
+        </p>
+
+        <p><strong>Missing Skills:</strong><br>
+          {% for skill in resume_result.missing %}
+          <span class="badge badge-missing"><i class="fas fa-times"></i> {{ skill|title }}</span>
+          {% endfor %}
+        </p>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- 2. CHATBOT -->
+    <div id="chat" class="feature-section {% if active_tab == 'chat' %}active{% endif %}">
+      <h2 class="feature-title"><i class="fas fa-robot"></i> Portfolio FAQ Bot</h2>
+      <p style="margin-bottom: 20px; color: #aaa;">Ask about my skills, projects, or background.</p>
+
+      <form method="POST">
+        {% csrf_token %}
+        {{ chat_form.as_p }}
+        <button type="submit" name="chat_submit" class="btn-submit">Ask Question</button>
+      </form>
+
+      {% if chat_response %}
+      <div class="result-box">
+        <p style="color: #bbb; font-size: 0.9rem;">You asked: <em>"{{ chat_form.cleaned_data.query }}"</em></p>
+        <p style="font-size: 1.1rem; color: #fff; margin-top: 10px;">
+          <i class="fas fa-comment-dots" style="color: #4CAF50;"></i>
+          {{ chat_response }}
+        </p>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- 3. PROJECT RECOMMENDER -->
+    <div id="recommender" class="feature-section {% if active_tab == 'recommender' %}active{% endif %}">
+      <h2 class="feature-title"><i class="fas fa-project-diagram"></i> Project Recommender</h2>
+      <p style="margin-bottom: 20px; color: #aaa;">Select a technology to see relevant projects.</p>
+
+      <form method="POST">
+        {% csrf_token %}
+        {{ rec_form.as_p }}
+        <button type="submit" name="rec_submit" class="btn-submit">Find Projects</button>
+      </form>
+
+      {% if rec_projects %}
+      <div class="result-box">
+        <h3>Projects using <span style="color: #4CAF50;">{{ rec_skill|title }}</span>:</h3>
+        <ul style="margin-top: 10px;">
+          {% for project in rec_projects %}
+          <li style="margin-bottom: 8px; font-size: 1.1rem;">{{ project }}</li>
+          {% empty %}
+          <li>No specific projects found for this skill yet.</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+
+  </div>
+
+  <script>
+    function openTab(tabName) {
+      // Hide all sections
+      const sections = document.querySelectorAll('.feature-section');
+      sections.forEach(sec => sec.classList.remove('active'));
+
+      // Deactivate all buttons
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      // Activate specific tab and button
+      document.getElementById(tabName).classList.add('active');
+
+      // Find button that triggered (approximate) or loop to match
+      // Simple way: re-query by onclick attribute or matching index
+      // For simplicity in this demo, we trust the backend handling 'active_tab' on reload,
+      // but for JS switching without reload (if we had HTMX), this toggles visibility.
+      // Since forms submit POST, page reloads with correct active_tab from context.
+      // But for visual feedback BEFORE submit:
+      event.currentTarget.classList.add('active');
+    }
+  </script>
+
+</body>
+
+</html>

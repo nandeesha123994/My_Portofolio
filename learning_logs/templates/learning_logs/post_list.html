@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learning Logs | Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    .learning-container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .header h1 {
+      color: #fff;
+      font-size: 2.5rem;
+    }
+
+    .header p {
+      color: #aaa;
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .blog-card {
+      background: #2a2a2a;
+      border-radius: 10px;
+      padding: 25px;
+      transition: transform 0.3s;
+      border: 1px solid #333;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-5px);
+      border-color: #4CAF50;
+    }
+
+    .blog-date {
+      color: #888;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .blog-title {
+      color: #4CAF50;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .blog-desc {
+      color: #ccc;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .tags {
+      margin-bottom: 15px;
+    }
+
+    .tag {
+      background: #333;
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      margin-right: 5px;
+    }
+
+    .read-btn {
+      display: inline-block;
+      color: #4CAF50;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .read-btn:hover {
+      text-decoration: underline;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #888;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      color: white;
+    }
+  </style>
+</head>
+
+<body style="background-color: #1a1a1a;">
+
+  <div class="learning-container">
+    <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+
+    <div class="header">
+      <h1><i class="fas fa-book-reader"></i> Learning Logs</h1>
+      <p>Documenting my journey and technical deep dives.</p>
+    </div>
+
+    <div class="blog-grid">
+      {% for post in posts %}
+      <div class="blog-card">
+        <span class="blog-date"><i class="far fa-calendar-alt"></i> {{ post.date }} &bull; {{ post.read_time }}</span>
+        <h2 class="blog-title">{{ post.title }}</h2>
+        <div class="tags">
+          {% for tag in post.tags %}
+          <span class="tag">#{{ tag }}</span>
+          {% endfor %}
+        </div>
+        <p class="blog-desc">{{ post.description }}</p>
+        <a href="{% url 'post_detail' post.slug %}" class="read-btn">Read Article &rarr;</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</body>
+
+</html>

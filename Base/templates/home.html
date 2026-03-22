@@ -1,0 +1,263 @@
+{% load static%}
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>portf </title>
+    <link rel="icon" type="image/x-icon" href="./Images/favicon.jpeg">
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+    <link rel="stylesheet" href="{%static 'css/recruiter.css'%}">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+
+<body>`
+
+    <!-- Navbar Section -->
+    <nav id="navbar" class="flex s-around bg-color">
+        <div class="left-nav flex items-center">
+            <h2 class="t-white">Portfolio</h2>
+            {% if recruiter_mode %}
+            <span class="recruiter-badge">Recruiter Mode ON</span>
+            {% endif %}
+        </div>
+        <div class="right-nav">
+            <ul class="flex items-center">
+
+                {% if not recruiter_mode %}
+                <li><a href="#home" class="t-white roboto">Home <i class="fa-solid fa-house"></i></a></li>
+                <li><a href="#about" class="t-white roboto">About Me <i class="fa-solid fa-user"></i></a></li>
+                <li><a href="#skills" class="t-white roboto">Skills <i class="fa-solid fa-code"></i></a></li>
+                <li><a href="#Projects" class="t-white roboto">Projects <i class="fas fa-project-diagram"></i></a></li>
+                <li><a href="/miniapps/" class="t-white roboto">Live Mini Apps <i class="fas fa-gamepad"></i></a></li>
+
+                <li><a href="{% url 'smart_home' %}" class="t-white roboto">AI Features <i class="fas fa-brain"></i></a>
+                </li>
+                {% endif %}
+                <li><a href="#Contact" class="t-white roboto">Contact <i class="fa-solid fa-rocket"></i></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    {% if recruiter_mode %}
+    <div class="recruiter-banner">
+        <p><i class="fas fa-info-circle"></i> You are viewing <strong>Recruiter Mode</strong>. Optimized for hiring
+            managers.</p>
+    </div>
+    {% endif %}
+
+
+
+    <!-- Home Section -->
+    <section id="home" class="flex s-around sw-80 m-auto">
+        <div class="home-left flex items-center">
+            <div class="home-content">
+                <h6 class="poppinss">Hi, I'm</h6>
+                <h1 class="t-white">Nandeesha M</h1>
+                <h4 class="poppinss">Python Full Stack Developer</h4>
+
+                {% if recruiter_mode %}
+                <p class="t-white poppins" style="margin-bottom: 20px;">
+                    Passionate developer specializing in Python, Django, and SQL.
+                    <br>Proven ability to build scalable web applications and solve complex problems.
+                </p>
+                {% endif %}
+
+                <a href="{% static 'pdf/Nandeesha_Resume.pdf' %}" target="_blank">
+                    <button class="btn poppins">Download Resume</button></a>
+
+                {% if recruiter_mode %}
+                <button class="btn poppins" onclick="openModal()">Preview Resume</button>
+                {% else %}
+                <a class="btn live poppins" id="hireme" href="#Contact">Let's Talk</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="home-right flex s-center items-center">
+            <div class="circle flex s-center items-center" id="mainImage">
+                <!-- man photo -->
+                <img src="{% static 'images/man.png'%}" alt="" height="60px" width="60px">
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Resume Modal -->
+    {% if recruiter_mode %}
+    <div id="resumeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 style="color: #333; text-align: center;">Resume Preview</h2>
+            <iframe src="{% static 'pdf/Nandeesha_Resume.pdf' %}" width="100%" height="500px"></iframe>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if not recruiter_mode %}
+    <!-- About Section -->
+    <section id="about">
+        <h1 class="t-center my-2 t-white f-2">About Me</h1>
+        <div class="about-container flex s-around ">
+            <div class=" about-left flex s-center items-center">
+                <!-- Here in src replade the given link with your secondary image link -->
+                <img src="{%static 'images/dog.png'%}" alt="" style="width: 60%;">
+            </div>
+
+            <div class="about-right flex">
+                <div class="about-content">
+                    <h1 class="t-white m-b-1 poppins">Nandeesha M</h1>
+                    <p class="t-white poppins">I am a BCA graduate passionate about Python, SQL, and web development. I
+                        have worked on projects like a Digital Bus Pass Management System, where I gained experience in
+                        full-stack development and database management. I am a quick learner, adaptable, and motivated
+                        to start my career in the IT industry.</p>
+                    <a class="btn " id="hireme" href="">Hire Me</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <h1 class="t-center my-2 t-white f-2">Skills</h1>
+        <div class="services-container flex s-around h-50">
+            <div class=" skills-left flex s-center items-center">
+                <img src="{%static 'images/skiilimage.png'%}" alt="">
+            </div>
+
+            <div class="skills-right flex items-center">
+                <div class="skillss-container">
+                    <div class="java bar p-relative"><span class="bar-content left t-white">Python</span><span
+                            class="bar-content right-skills t-white">90%</span></div>
+                    <div class="html bar p-relative"><span class="bar-content left t-white">HTML</span><span
+                            class="bar-content right-skills t-white">90%</span></div>
+                    <div class="css bar p-relative"><span class="bar-content left t-white">CSS</span><span
+                            class="bar-content right-skills t-white">80%</span></div>
+                    <div class="js bar p-relative"><span class="bar-content left t-white">JavaScript</span><span
+                            class="bar-content right-skills t-white">60%</span></div>
+                    <div class="js bar p-relative"><span class="bar-content left t-white">React JS</span><span
+                            class="bar-content right-skills t-white">60%</span></div>
+                    <div class="python bar p-relative"><span class="bar-content left t-white">Django</span><span
+                            class="bar-content right-skills t-white">50%</span></div>
+                    <div class="mysql bar p-relative"><span class="bar-content left t-white">MySQL</span><span
+                            class="bar-content right-skills t-white">40%</span></div>
+                    <div class="mysql bar p-relative"><span class="bar-content left t-white">REST API</span><span
+                            class="bar-content right-skills t-white">40%</span></div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Projects Section -->
+    <section id="Projects">
+        <h1 class=" t-center my-2 t-white f-2">Projects</h1>
+        <div class="projects-container flex s-center">
+            {% for project in projects %}
+            <div class="projects-item flex f-col s-center items-center">
+
+                <h1 class="t-white poppins">{{ project.title }}</h1>
+                {% if project.image %}
+                <img src="{{ project.image.url }}" alt="{{ project.title }}"
+                    style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">
+                {% endif %}
+                <p class="t-white poppins"> {{ project.description }}</p>
+                <div class="buttons flex s-around">
+                    {% if project.github_link %}
+                    <a href="{{ project.github_link }}" target="_blanks" class="btn mx-1 m-top">GitHub</a>
+                    {% endif %}
+                    {% if project.live_link %}
+                    <a href="{{ project.live_link }}" target="_blanks" class="btn m-top live">Live
+                        Link</a>
+                    {% endif %}
+                    <a href="{% url 'case_study' project.slug %}" class="btn m-top mx-1"
+                        style="background: transparent; border: 1px solid #4CAF50; color: #4CAF50;">View Case Study</a>
+                </div>
+            </div>
+            {% endfor %}
+            {% if not projects %}
+            <p class="t-white poppins">No projects added yet.</p>
+            {% endif %}
+        </div>
+
+        </div>
+    </section>
+
+    <!-- Contact Me Section -->
+    <section id="Contact" class="m-b-1">
+        <h1 class=" t-center my-2 t-white f-2">Contact Me</h1>
+
+        <!-- Messages Display -->
+        {% if messages %}
+        <div class="contact-container flex s-center" style="margin-bottom: 20px;">
+            {% for message in messages %}
+            <div class="message {{ message.tags }}"
+                style="background: #4CAF50; color: white; padding: 15px; border-radius: 5px; text-align: center; width: 80%;">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="contact-container flex s-around items-centers">
+            <div class="form" id="contactForm">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="name form-div">
+                        <input type="text" name="name" id="name" class="poppins" placeholder="Enter Your Name">
+                    </div>
+
+                    <div class="email form-div">
+                        <input type="email" name="email" id="" class="poppins" placeholder="Enter Your Email" required>
+                    </div>
+
+                    <div class="phone form-div">
+                        <input type="phone" name="number" id="" class="poppins" placeholder="Enter Your Phone" required>
+                    </div>
+
+                    <div class="textarea form-div">
+                        <textarea name="content" id="textarea" cols="30" rows="10" class="poppins"
+                            placeholder="Enter Messages"></textarea>
+                    </div>
+                    <button type="submit" class="btn poppins" id="submit">Send</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer id="footer">
+        <ul class="flex s-center w-80 m-auto my-2 res">
+            <li><a href="#home" class="poppinss">Home</a></li>
+            <li><a href="#about" class="poppinss">About</a></li>
+            <li><a href="#skills" class="poppinss">Skills</a></li>
+            <li><a href="#projects" class="poppinss">Projects</a></li>
+            <li><a href="{% url 'learning_home' %}" class="poppinss">Learning Logs</a></li>
+            <li><a href="#portfolio" class="poppinss">Portfolio</a></li>
+        </ul>
+        <ul class="flex s-center w-80 font-awesome ">
+            <a href="https://www.linkedin.com/in/nandeesha-m/" target="_blank">
+                <li><i class="fa-brands fa-linkedin-in"></i></li>
+            </a>
+            <a href="https://github.com/nandeesha123994" target="_blank">
+                <li><i class="fa-brands fa-github"></i></li>
+            </a>
+            <a href="" target="_blank">
+                <li><i class="fa-brands fa-instagram"></i></li>
+            </a>
+
+        </ul>
+        <p class="t-center my-2 poppins">Built with Django & Caffeine ☕ - <span class="cpy-white poppins">Nandeesha M
+            </span></p>
+    </footer>
+
+</body>
+
+</html>

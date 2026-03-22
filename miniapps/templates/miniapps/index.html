@@ -1,0 +1,216 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Mini Apps | Portfolio</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <style>
+    body {
+      background-color: #1a1a1a;
+      color: #f0f0f0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .container {
+      width: 80%;
+      margin: 20px auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .header h1 {
+      color: #4CAF50;
+      font-size: 2.5rem;
+    }
+
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .app-card {
+      background: #2a2a2a;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      border: 1px solid #333;
+    }
+
+    .app-card h2 {
+      border-bottom: 2px solid #4CAF50;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      color: #4CAF50;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-control {
+      width: 90%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #444;
+      background: #333;
+      color: white;
+      margin-top: 5px;
+    }
+
+    .btn-submit {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .btn-submit:hover {
+      background: #45a049;
+    }
+
+    .result-box {
+      margin-top: 20px;
+      padding: 15px;
+      background: #333;
+      border-radius: 5px;
+      border: 1px solid #4CAF50;
+    }
+
+    .text-weak {
+      color: #ff4444;
+    }
+
+    .text-medium {
+      color: #ffbb33;
+    }
+
+    .text-strong {
+      color: #00C851;
+    }
+
+    .nav-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #ccc;
+      text-decoration: none;
+    }
+
+    .nav-link:hover {
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <a href="/" class="nav-link"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+
+    <div class="header">
+      <h1>Live Mini Apps</h1>
+      <p>Showcasing Backend Logic with Django</p>
+
+      <div style="max-width: 600px; margin: 20px auto; color: #ccc; font-size: 0.9rem; line-height: 1.6;">
+        <p><strong>Why this approach works:</strong> By processing logic on the server-side with Django instead of
+          client-side JavaScript, we ensure data integrity, easier maintainability, and consistent validation rules
+          across all platforms.</p>
+        <p style="margin-top: 15px; font-style: italic; color: #4CAF50;">"First, solve the problem. Then, write the
+          code." – John Johnson</p>
+      </div>
+    </div>
+
+    <div class="apps-grid">
+      <!-- APP 1: Logic Demo -->
+      <div class="app-card">
+        <h2><i class="fas fa-brain"></i> Python Logic Demo</h2>
+        <form method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            {{ logic_form.number.label_tag }}
+            {{ logic_form.number }}
+          </div>
+          <button type="submit" name="logic_submit" class="btn-submit">Analyze</button>
+        </form>
+        {% if logic_result %}
+        <div class="result-box">
+          <p><strong>Input:</strong> {{ logic_result.number }}</p>
+          <p>Is Prime: {{ logic_result.is_prime }}</p>
+          <p>Is Palindrome: {{ logic_result.is_palindrome }}</p>
+          <p>Factorial: {{ logic_result.factorial }}</p>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- APP 2: Password Strength -->
+      <div class="app-card">
+        <h2><i class="fas fa-lock"></i> Password Strength</h2>
+        <form method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            {{ pass_form.password.label_tag }}
+            {{ pass_form.password }}
+          </div>
+          <button type="submit" name="pass_submit" class="btn-submit">Check Strength</button>
+        </form>
+        {% if pass_result %}
+        <div class="result-box">
+          <p><strong>Strength:</strong>
+            <span
+              class="{% if pass_result.strength == 'Weak' %}text-weak{% elif pass_result.strength == 'Medium' %}text-medium{% else %}text-strong{% endif %}">
+              {{ pass_result.strength }}
+            </span>
+          </p>
+          {% if pass_result.messages %}
+          <ul>
+            {% for msg in pass_result.messages %}
+            <li><small>{{ msg }}</small></li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- APP 3: Bus Pass Checker -->
+      <div class="app-card">
+        <h2><i class="fas fa-bus"></i> Bus Pass Checker</h2>
+        <form method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            {{ bus_form.pass_id.label_tag }}
+            {{ bus_form.pass_id }}
+          </div>
+          <button type="submit" name="bus_submit" class="btn-submit">Check Status</button>
+        </form>
+        {% if bus_result %}
+        <div class="result-box">
+          {% if bus_result.status == "Not Found" %}
+          <p style="color: #ff4444;">{{ bus_result.message }}</p>
+          {% else %}
+          <p><strong>ID:</strong> {{ bus_result.id }}</p>
+          <p><strong>Status:</strong> {{ bus_result.status }}</p>
+          <p><strong>Route:</strong> {{ bus_result.route }}</p>
+          <p><strong>Valid Until:</strong> {{ bus_result.valid_until }}</p>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
